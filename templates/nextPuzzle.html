@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="/interface/submitAnswer" method="get">
+<h1> You've completed {{completedCount}} </h1>
+<table>
+<tr>
+<td><img src="{{ MEDIA_URL }}{{ matrixItem.filename }}" width="500"></td>
+<td>
+<strong>Which of the eight answer items completes the pattern on the left?</strong><br>
+<input type="radio" name="answer" required value="1">1
+<input type="radio" name="answer" required value="2">2
+<input type="radio" name="answer" required value="3">3
+<input type="radio" name="answer" required value="4">4<br>
+<input type="radio" name="answer" required value="5">5
+<input type="radio" name="answer" required value="6">6
+<input type="radio" name="answer" required value="7">7
+<input type="radio" name="answer" required value="8">8<br>
+<input type="submit" value="Submit"><br>
+</form>
+</td>
+</tr>
+</table>
+{% endblock %}

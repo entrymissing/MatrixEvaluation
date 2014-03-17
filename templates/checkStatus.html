@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>All Submissions (Checked / Accepted ):</h3><br>
+<table border="1">
+	<tr>
+	<th>Submission ID</th>
+	<th>asdfasdfasdf {{ checkerNames.0 }}</th>
+	<th>{{ checkerNames.1 }}</th>
+	<th>{{ checkerNames.2 }}</th>
+	<th>{{ checkerNames.3 }}</th>
+	</tr>
+	{% for curSubmission in allMatrixItems %}	
+	<tr>
+		<td><a href="/integrityCheck/{{ curSubmission.fileID }}">{{ curSubmission.fileID }}</a></td> 
+		<td>
+		{% if curSubmission.checked.0 %}
+			<center><img src="{{ STATIC_URL }}images/done_icon.png" height="20">
+		{% else %}
+			<center><img src="{{ STATIC_URL }}images/redx_icon.png" height="20">
+		{% endif %}
+		{% if curSubmission.accepted.0 %}
+			<img src="{{ STATIC_URL }}images/done_icon.png" height="20"></center>
+		{% else %}
+			<img src="{{ STATIC_URL }}images/redx_icon.png" height="20"></center>
+		{% endif %}
+		</td> 
+		<td>
+		{% if curSubmission.checked.1 %}
+			<center><img src="{{ STATIC_URL }}images/done_icon.png" height="20">
+		{% else %}
+			<center><img src="{{ STATIC_URL }}images/redx_icon.png" height="20">
+		{% endif %}
+		{% if curSubmission.accepted.1 %}
+			<img src="{{ STATIC_URL }}images/done_icon.png" height="20"></center>
+		{% else %}
+			<img src="{{ STATIC_URL }}images/redx_icon.png" height="20"></center>
+		{% endif %}
+		</td> 
+		<td>
+		{% if curSubmission.checked.2 %}
+			<center><img src="{{ STATIC_URL }}images/done_icon.png" height="20">
+		{% else %}
+			<center><img src="{{ STATIC_URL }}images/redx_icon.png" height="20">
+		{% endif %}
+		{% if curSubmission.accepted.2 %}
+			<img src="{{ STATIC_URL }}images/done_icon.png" height="20"></center>
+		{% else %}
+			<img src="{{ STATIC_URL }}images/redx_icon.png" height="20"></center>
+		{% endif %}
+		</td> 
+		<td>
+		{% if curSubmission.checked.3 %}
+			<center><img src="{{ STATIC_URL }}images/done_icon.png" height="20">
+		{% else %}
+			<center><img src="{{ STATIC_URL }}images/redx_icon.png" height="20">
+		{% endif %}
+		{% if curSubmission.accepted.3 %}
+			<img src="{{ STATIC_URL }}images/done_icon.png" height="20"></center>
+		{% else %}
+			<img src="{{ STATIC_URL }}images/redx_icon.png" height="20"></center>
+		{% endif %}
+		</td> 
+	</tr>
+	{% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Please enter your MTurk ID:</h2>
+<br>
+<form method="get" action="/interface/setCookie">
+{% csrf_token %}
+<input type="input" value="{{ userName }}" name="userName" required = "True"/>
+<input type="submit" value="login" />
+</form>
+<br>
+Please make sure that you've entered the correct MTurk ID since we use this ID to automatically approve HITs.
+<br>
+We use your MTurk ID only to track your actions in our system to allow us to pay you and make sure that your not working on puzzles you've solved before. 
+We are not linking your performance to your MTurk account.
+{% endblock %}

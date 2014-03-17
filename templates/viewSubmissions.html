@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>All Submissions:</h3><br>
+<table border="1">
+	<tr>
+	<th>Submission ID</th>
+	<th>Checked By You</th>
+	<th>Submitted By</th>
+	</tr>
+	{% for curSubmission in allMatrixItems %}	
+	<tr>
+		<td><a href="/integrityCheck/{{ curSubmission.fileID }}">{{ curSubmission.fileID }}</a></td> 
+		<td>
+		{% if curSubmission.checked %}
+			<center><img src="{{ STATIC_URL }}images/done_icon.png" height="20"></center>
+		{% else %}
+			<center><img src="{{ STATIC_URL }}images/redx_icon.png" height="20"></center>
+		{% endif %}
+		</td> 
+		<td>{{ curSubmission.name }}</td>  
+	</tr>
+	{% endfor %}
+</table>
+{% endblock %}

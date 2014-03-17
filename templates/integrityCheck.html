@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Matrix Item: {{ matrixItem.fileID }}</h3>
+<strong>Submitted by:</strong> {{ matrixItem.name }}  - {{ matrixItem.email }}<br>
+<strong>Rated as:</strong> {{ matrixItem.reported_Difficulty }}<br>
+
+<form action="/interface/submitIntegrityCheck" method="get">
+<input name="fileID" type="hidden" value="{{ matrixItem.fileID }}">
+<table>
+<tr>
+<td><img src="{{ MEDIA_URL }}{{ matrixItem.filename }}" width="600"></td>
+<td>
+<strong>Does this item meet the requirements for a matrix puzzle? </strong><br>
+- contains no color<br>
+- contains no symbols (smilies, characters, parts of images, ..) <br>
+- is a 3x3 puzzle with bottom left missing <br>
+- 8 possible answers below the puzzle named "1"-"8" <br>
+- no indication of the correct answer<br>
+- nothing else is in the puzzle (e.g. text, explanations, credits, names, ..)<br>
+<br>
+
+<input type="radio" name="requirements" required value="yes">yes<br>
+<input type="radio" name="requirements" required value="no">no<br><br>
+<strong>The correct answer is (hover to reveal):</strong> <div class="hidden"> {{ matrixItem.reported_CorrectAnswer }} </div> <br>
+<strong>The explanation for the correct answer is (hover to reveal):</strong> <div class="hidden">{{ matrixItem.explanation }}</div>
+
+<br><br>
+<strong>Is the logic behind the correct answer correct and is it the single only correct answer?</strong><br>
+<input type="radio" name="correct" required value="yes">yes<br>
+<input type="radio" name="correct" required value="no">no<br>
+
+<br><br>
+<strong>Do you nominate this item as one of the "best" ones for the contest?</strong><br>
+<input type="radio" name="nominated" required value="yes">yes<br>
+<input type="radio" name="nominated" required value="no" checked>no<br>
+</td>
+</tr>
+</table>
+
+If you answered no to any of the first two questions please comment why. Or add any other comments.<br>
+<textarea name="comments" rows = "6" cols = "50"></textarea><br><br>
+<input type="submit" value="Submit"><br>
+</form>
+{% endblock %}

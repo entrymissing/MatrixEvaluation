@@ -13,6 +13,7 @@ class MatrixItem(models.Model):
     filesize = models.IntegerField()
     filetype = models.CharField(max_length = 50)
     explanation = models.TextField()
+    status = models.CharField(max_length = 50)
     
     def checkedByUser(self, rater):
         try:
@@ -37,7 +38,7 @@ class MatrixItem(models.Model):
 
     def __unicode__(self):
         return self.fileID
-    
+
 class MatrixAnswer(models.Model):
     matrixItem = models.ForeignKey(MatrixItem)
     userName = models.CharField(max_length = 100)

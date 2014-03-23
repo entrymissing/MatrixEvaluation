@@ -15,7 +15,7 @@ def submitIntegrityCheck(request):
     relatedMatrixItem = get_object_or_404(MatrixItem, fileID = request.GET['fileID'])
 
     print request.GET['correct']
-	
+
     #check if it already exists
     try:
         previousIntegrityCheck = IntegrityCheck.objects.get(matrixItem=relatedMatrixItem, rater = request.user)
@@ -39,25 +39,52 @@ def submitIntegrityCheck(request):
     return HttpResponseRedirect('/viewSubmissions')
 
 @login_required
-def checkStatus(request):
-    allCheckerNames = ['engel', 'chabris', 'eric', 'jackie']
-    
-    allCheckers = [User.objects.get(username = curChecker) for curChecker in allCheckerNames]
-    allMatrixItems = MatrixItem.objects.all()
-    updatedMatrixItems = []
+def viewAccepted(request):
+	pass
 
-    for curItem in allMatrixItems:
-        curItem.checked = []
-        curItem.accepted = []
-        for curChecker in allCheckers:
-            checked, accepted = curItem.checkedAndAcceptedByUser(curChecker)
-            curItem.checked.append( checked )
-            curItem.accepted.append( accepted )
-        updatedMatrixItems.append(curItem)
-    
-    allMatrixItems = updatedMatrixItems
-    context = {'allMatrixItems':allMatrixItems, 'checkerNames':allCheckerNames}
-    return render(request, 'checkStatus.html', context)
+@login_required
+def checkStatus(request):
+	allCheckerNames = ['engel', 'chabris', 'eric', 'jackie']
+	checkerCounts = [0,0,0,0]
+	
+	allCheckers = [User.objects.get(username = curChecker) for curChecker in allCheckerNames]
+	allMatrixItems = MatrixItem.objects.all()
+	updatedMatrixItems = []
+	
+	for curItem in allMatrixItems:
+		curItem.checked = []
+		curItem.accepted = []
+		for curID, curChecker in enumerate(allCheckers):
+			checked, accepted = curItem.checkedAndAcceptedByUser(curChecker)
+			curItem.checked.append( checked )
+			curItem.accepted.append( accepted )
+			if checked:
+				checkerCounts[curID] += 1
+
+#		if not accepted and not curItem.status == 'Rejected':
+#			curItem.status = 'Rejected'
+#			curItem.save()
+		updatedMatrixItems.append(curItem)
+		
+		status = 'Pending'
+		numAccepts = 0
+		for curChecked, curAccepted in zip(curItem.checked, curItem.accepted):
+			if curChecked and not curAccepted:
+				status = 'Rejected'
+				break
+			if curChecked and curAccepted:
+				numAccepts += 1
+		
+			if numAccepts >= 3:
+				status = 'Accepted'
+		
+		if not curItem.status == status:
+			curItem.status = status
+			curItem.save()
+	
+	allMatrixItems = updatedMatrixItems
+	context = {'allMatrixItems':allMatrixItems, 'checkerNames':allCheckerNames, 'checkerCounts':checkerCounts}
+	return render(request, 'checkStatus.html', context)
 
 @login_required
 def viewSubmissions(request):
@@ -134,8 +161,9 @@ def submitAnswer(request):
 def frontPage(request):
     allMatrixItems = MatrixItem.objects.all()
     allIntegrityChecks = IntegrityCheck.objects.all()
+    yourIntegrityChecks = IntegrityCheck.objects.filter( rater = request.user)
     
-    context = {'numMatrixItems': len(allMatrixItems), 'numIntegrityChecks':len(allIntegrityChecks), 'portionIntegrityChecks':around(100*(float(len(allIntegrityChecks)) / float(len(allMatrixItems)) / 4.0),4)}
+    context = {'yourIntegrityChecks': len(yourIntegrityChecks), 'yourPercentChecks': float(len(yourIntegrityChecks))/float(len(allMatrixItems))*100.0 , 'numMatrixItems': len(allMatrixItems), 'numIntegrityChecks':len(allIntegrityChecks), 'portionIntegrityChecks':around(100*(float(len(allIntegrityChecks)) / float(len(allMatrixItems)) / 4.0),4)}
     return render(request, 'frontpage.html', context)
 
 @login_required

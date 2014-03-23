@@ -4,24 +4,32 @@
 <table border="1">
 	<tr>
 	<th>Submission ID</th>
-	<th>asdfasdfasdf {{ checkerNames.0 }}</th>
-	<th>{{ checkerNames.1 }}</th>
-	<th>{{ checkerNames.2 }}</th>
-	<th>{{ checkerNames.3 }}</th>
+	<th>Status</th>
+	<th>Checked by {{ checkerNames.0 }} ({{ checkerCounts.0 }})</th>
+	<th>Checked by {{ checkerNames.1 }} ({{ checkerCounts.1 }})</th>
+	<th>Checked by {{ checkerNames.2 }} ({{ checkerCounts.2 }})</th>
+	<th>Checked by {{ checkerNames.3 }} ({{ checkerCounts.3 }})</th>
 	</tr>
 	{% for curSubmission in allMatrixItems %}	
 	<tr>
 		<td><a href="/integrityCheck/{{ curSubmission.fileID }}">{{ curSubmission.fileID }}</a></td> 
+		<td
+		{% if curSubmission.status == 'Accepted' %}
+		bgcolor="#00DD00"
+		{% endif %}
+		{% if curSubmission.status == 'Rejected' %}
+		bgcolor="#DD0000"
+		{% endif %}
+		{% if curSubmission.status == 'Pending' %}
+		bgcolor="#FFDD00"
+		{% endif %}
+		
+		>{{ curSubmission.status }}</td> 
 		<td>
 		{% if curSubmission.checked.0 %}
 			<center><img src="{{ STATIC_URL }}images/done_icon.png" height="20">
 		{% else %}
 			<center><img src="{{ STATIC_URL }}images/redx_icon.png" height="20">
-		{% endif %}
-		{% if curSubmission.accepted.0 %}
-			<img src="{{ STATIC_URL }}images/done_icon.png" height="20"></center>
-		{% else %}
-			<img src="{{ STATIC_URL }}images/redx_icon.png" height="20"></center>
 		{% endif %}
 		</td> 
 		<td>
@@ -30,11 +38,6 @@
 		{% else %}
 			<center><img src="{{ STATIC_URL }}images/redx_icon.png" height="20">
 		{% endif %}
-		{% if curSubmission.accepted.1 %}
-			<img src="{{ STATIC_URL }}images/done_icon.png" height="20"></center>
-		{% else %}
-			<img src="{{ STATIC_URL }}images/redx_icon.png" height="20"></center>
-		{% endif %}
 		</td> 
 		<td>
 		{% if curSubmission.checked.2 %}
@@ -42,22 +45,12 @@
 		{% else %}
 			<center><img src="{{ STATIC_URL }}images/redx_icon.png" height="20">
 		{% endif %}
-		{% if curSubmission.accepted.2 %}
-			<img src="{{ STATIC_URL }}images/done_icon.png" height="20"></center>
-		{% else %}
-			<img src="{{ STATIC_URL }}images/redx_icon.png" height="20"></center>
-		{% endif %}
 		</td> 
 		<td>
 		{% if curSubmission.checked.3 %}
 			<center><img src="{{ STATIC_URL }}images/done_icon.png" height="20">
 		{% else %}
 			<center><img src="{{ STATIC_URL }}images/redx_icon.png" height="20">
-		{% endif %}
-		{% if curSubmission.accepted.3 %}
-			<img src="{{ STATIC_URL }}images/done_icon.png" height="20"></center>
-		{% else %}
-			<img src="{{ STATIC_URL }}images/redx_icon.png" height="20"></center>
 		{% endif %}
 		</td> 
 	</tr>

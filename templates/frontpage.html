@@ -1,9 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Matrix Reasoning Challenge Admin Interface</h2>
+<br>
+<p>
+<h3>General Statistics</h3>
+<strong>Number of Items in the system:</strong> {{numMatrixItems}}<br>
+<strong>Number of Integrity Checks done: </strong> {{numIntegrityChecks}}<br>
+<strong>Percent of Integrity Checks done: </strong> {{portionIntegrityChecks}}%<br>
+</p>
 
-<h3>Number of Items in the system: {{numMatrixItems}}</h3>
-<h3>Number of Integrity Checks done: {{numIntegrityChecks}}</h3>
-<h3>Percent of Integrity Checks done: {{portionIntegrityChecks}}%</h3>
+<br>
+<br>
+<p>
+<h3>Your Statistics</h3>
+<strong>Number of Integrity Checks done by you: </strong> {{yourIntegrityChecks}}<br>
+<strong>Percent of Integrity Checks done: </strong> {{yourPercentChecks}}%<br>
+</p>
 
 {% endblock %}

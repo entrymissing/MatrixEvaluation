@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^interface/setCookie$', views.setCookie, name='setCookie'),
     url(r'^interface/submitAnswer$', views.submitAnswer, name='submitAnswer'),
     url(r'^checkStatus$', views.checkStatus, name='checkStatus'),
+    url(r'^viewAccepted$', views.viewAccepted, name='viewAccepted'),
     
     url(r'^adminTools/updateDB$', views.updateDB, name='updateDB'),
     url(r'^login$', views.loginUser, name='loginUser'),

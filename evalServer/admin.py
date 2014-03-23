@@ -2,7 +2,7 @@ from django.contrib import admin
 from evalServer.models import MatrixItem, IntegrityCheck, MatrixAnswer
 
 class MatrixItemAdmin(admin.ModelAdmin):
-	list_display = ('fileID', 'name', 'email')
+	list_display = ('fileID', 'name', 'email', 'status')
 
 class MatrixAnswerAdmin(admin.ModelAdmin):
 	list_display = ('matrixItem', 'userName', 'timeTaken')
